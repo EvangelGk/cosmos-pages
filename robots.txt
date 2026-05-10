@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /docs/dpia-template.md
+Disallow: /docs/ropa-snippet.md
+Disallow: /docs/audit-trail-spec.md
+Disallow: /docs/vendor-risk.md
+Disallow: /docs/iso-27001-27701-matrix.md
+
+Sitemap: https://cosmos-sport.example.com/arena/sitemap.xml

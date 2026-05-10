@@ -1,0 +1,43 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if added later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+.pnpm-debug.log*
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+.cache/
+.parcel-cache/
+
+# Logs
+*.log
+
+# Sensitive — NEVER commit
+secrets/
+*.pem
+*.key
+*.p12
+config.local.*
+
+# OneDrive sync artifacts
+*.tmp
+~$*
+
+# Coverage / tests
+coverage/
+.nyc_output/

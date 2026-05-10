@@ -2,32 +2,28 @@
 <html lang="el">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="description" content="Cosmos Sport — Arena & Smart HR System" />
   <meta name="robots" content="index,follow" />
   <title>Cosmos Sport — Arena & Smart HR System</title>
   <style>
-    /* ═══════════════════════════════════════════
-       RESET & BASE
-    ═══════════════════════════════════════════ */
+    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', system-ui, Arial, sans-serif; }
+    [hidden] { display: none !important; }
 
-    /* ═══════════════════════════════════════════
-       TAB SWITCHER
-    ═══════════════════════════════════════════ */
+    /* ══════════════════════════════════════════
+       TAB BAR
+    ══════════════════════════════════════════ */
     #tab-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 10000;
       display: flex;
       justify-content: center;
-      gap: 0;
       background: #060d1a;
       border-bottom: 1px solid #1e293b;
-      padding: 0;
     }
     .tab-btn {
       display: flex;
@@ -45,571 +41,292 @@
       border-bottom: 3px solid transparent;
       transition: color .2s, border-color .2s, background .2s;
     }
-    .tab-btn:hover { color: #e2e8f0; background: #0f1929; }
+    .tab-btn:hover  { color: #e2e8f0; background: #0f1929; }
     .tab-btn.active { color: #60a5fa; border-bottom-color: #60a5fa; }
     .tab-btn .dot {
       width: 8px; height: 8px;
       border-radius: 50%;
       background: currentColor;
-      opacity: .5;
-      flex-shrink: 0;
+      opacity: .5; flex-shrink: 0;
     }
     .tab-btn.active .dot { opacity: 1; }
 
-    /* ═══════════════════════════════════════════
-       PAGE CONTAINERS
-    ═══════════════════════════════════════════ */
-    .page { display: none; }
-    .page.active { display: block; }
-
-    /* ════════════════════════════════════════════════════════
-       ██████  ARENA PAGE CSS
-    ════════════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════
+       ARENA  (#page-arena)
+    ══════════════════════════════════════════ */
     #page-arena {
-      --a-bg:      #0b1220;
-      --a-surface: #0f1929;
-      --a-border:  #1e293b;
-      --a-text:    #e2e8f0;
-      --a-muted:   #94a3b8;
-      --a-accent:  #3b82f6;
-      --a-accent2: #60a5fa;
-      --a-green:   #22c55e;
-      background: var(--a-bg);
-      color: var(--a-text);
-      padding-top: 53px; /* tab-bar height */
+      --bg:      #0b1220;
+      --surface: #0f1929;
+      --border:  #1e293b;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --accent:  #3b82f6;
+      --accent2: #60a5fa;
+      --green:   #22c55e;
+      background: var(--bg);
+      color: var(--text);
+      padding-top: 53px;
+      min-height: 100vh;
     }
-    #page-arena a { color: var(--a-accent2); }
-    #page-arena a:hover { text-decoration: underline; }
+    #page-arena a            { color: var(--accent2); }
+    #page-arena a:hover      { text-decoration: underline; }
 
-    /* container */
-    #page-arena .container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    #page-arena .container   { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
 
-    /* ── header ── */
+    /* header */
     #page-arena .site-header {
-      position: sticky;
-      top: 53px;
-      z-index: 200;
-      background: rgba(11,18,32,.9);
+      position: sticky; top: 53px; z-index: 200;
+      background: rgba(11,18,32,.92);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--a-border);
+      border-bottom: 1px solid var(--border);
     }
     #page-arena .header-grid {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      padding: 14px 24px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 24px;
+      padding: 14px 24px; flex-wrap: wrap;
     }
     #page-arena .brand {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: .08em;
-      color: #fff;
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      font-weight: 800; font-size: 1rem; letter-spacing: .08em; color: #fff;
     }
-    #page-arena .brand-mark { color: var(--a-accent); font-size: 1.1rem; }
-    #page-arena .brand em { color: var(--a-accent2); font-style: normal; }
-    #page-arena .primary-nav {
-      display: flex;
-      gap: 4px;
-      flex: 1;
-      flex-wrap: wrap;
-    }
+    #page-arena .brand-mark { color: var(--accent); font-size: 1.1rem; }
+    #page-arena .brand em   { color: var(--accent2); font-style: normal; }
+    #page-arena .primary-nav { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
     #page-arena .primary-nav a {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--a-muted);
-      text-decoration: none;
-      transition: color .2s, background .2s;
+      padding: 6px 12px; border-radius: 6px;
+      font-size: .82rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; transition: color .2s, background .2s;
     }
-    #page-arena .primary-nav a:hover { color: var(--a-text); background: var(--a-surface); }
+    #page-arena .primary-nav a:hover { color: var(--text); background: var(--surface); }
     #page-arena .header-actions { display: flex; align-items: center; gap: 10px; }
     #page-arena .lang-toggle {
-      background: var(--a-surface);
-      border: 1px solid var(--a-border);
-      color: var(--a-muted);
-      padding: 5px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: .8rem;
-      font-weight: 600;
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+      padding: 5px 12px; border-radius: 6px; cursor: pointer;
+      font-size: .8rem; font-weight: 600;
     }
-    #page-arena .lang-toggle:hover { color: var(--a-text); }
+    #page-arena .lang-toggle:hover { color: var(--text); }
     #page-arena .sep { margin: 0 3px; opacity: .4; }
 
-    /* ── Arena buttons ── */
+    /* buttons */
     #page-arena .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 20px;
-      border-radius: 8px;
-      font-size: .88rem;
-      font-weight: 700;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 20px; border-radius: 8px;
+      font-size: .88rem; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
       transition: opacity .2s, transform .1s;
     }
-    #page-arena .btn:active { transform: scale(.97); }
-    #page-arena .btn-primary {
-      background: var(--a-accent);
-      color: #fff;
-    }
-    #page-arena .btn-primary:hover { background: #2563eb; text-decoration: none; color:#fff; }
-    #page-arena .btn-ghost {
-      background: transparent;
-      color: var(--a-text);
-      border: 1px solid var(--a-border);
-    }
-    #page-arena .btn-ghost:hover { background: var(--a-surface); text-decoration: none; }
-    #page-arena .btn.full { width: 100%; justify-content: center; }
+    #page-arena .btn:active      { transform: scale(.97); }
+    #page-arena .btn-primary     { background: var(--accent); color: #fff; }
+    #page-arena .btn-primary:hover { background: #2563eb; text-decoration: none; color: #fff; }
+    #page-arena .btn-ghost       { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    #page-arena .btn-ghost:hover { background: var(--surface); text-decoration: none; }
+    #page-arena .btn.full        { width: 100%; justify-content: center; }
 
-    /* ── hero ── */
-    #page-arena .hero {
-      padding: 80px 0 60px;
-      position: relative;
-      overflow: hidden;
-    }
+    /* hero */
+    #page-arena .hero { padding: 80px 0 60px; position: relative; overflow: hidden; }
     #page-arena .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
     }
     @media (max-width: 760px) {
       #page-arena .hero-grid { grid-template-columns: 1fr; }
       #page-arena .hero-visual { display: none; }
     }
     #page-arena .eyebrow {
-      font-size: .75rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--a-accent2);
-      margin-bottom: 12px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent2); margin-bottom: 12px;
     }
     #page-arena h1 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      line-height: 1.1;
-      background: linear-gradient(135deg, #fff 40%, var(--a-accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 16px;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 40%, var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 16px;
     }
-    #page-arena .lead {
-      font-size: 1.05rem;
-      color: var(--a-muted);
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
+    #page-arena .lead { font-size: 1.05rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
     #page-arena .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
-    #page-arena .hero-stats {
-      list-style: none;
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    #page-arena .hero-stats li {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    #page-arena .hero-stats strong {
-      font-size: .75rem;
-      font-weight: 800;
-      color: var(--a-accent2);
-      letter-spacing: .05em;
-    }
-    #page-arena .hero-stats span {
-      font-size: .72rem;
-      color: var(--a-muted);
-    }
-    /* orbs */
-    #page-arena .hero-visual {
-      position: relative;
-      height: 320px;
-    }
-    #page-arena .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      opacity: .35;
-    }
-    #page-arena .orb-a {
-      width: 280px; height: 280px;
-      background: radial-gradient(circle, #3b82f6, transparent);
-      top: 0; right: 0;
-    }
-    #page-arena .orb-b {
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, #8b5cf6, transparent);
-      bottom: 20px; left: 30px;
-    }
+    #page-arena .hero-stats { list-style: none; display: flex; gap: 24px; flex-wrap: wrap; }
+    #page-arena .hero-stats li { display: flex; flex-direction: column; gap: 2px; }
+    #page-arena .hero-stats strong { font-size: .75rem; font-weight: 800; color: var(--accent2); letter-spacing: .05em; }
+    #page-arena .hero-stats span  { font-size: .72rem; color: var(--muted); }
+    #page-arena .hero-visual { position: relative; height: 320px; }
+    #page-arena .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .35; }
+    #page-arena .orb-a { width: 280px; height: 280px; background: radial-gradient(circle, #3b82f6, transparent); top: 0; right: 0; }
+    #page-arena .orb-b { width: 200px; height: 200px; background: radial-gradient(circle, #8b5cf6, transparent); bottom: 20px; left: 30px; }
     #page-arena .grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(var(--a-border) 1px, transparent 1px),
-                        linear-gradient(90deg, var(--a-border) 1px, transparent 1px);
+      position: absolute; inset: 0; opacity: .3;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 32px 32px;
-      opacity: .3;
     }
 
-    /* ── sections ── */
-    #page-arena .section { padding: 72px 0; }
-    #page-arena .section-alt { background: var(--a-surface); }
-    #page-arena .section-head {
-      text-align: center;
-      margin-bottom: 48px;
-    }
+    /* sections */
+    #page-arena .section     { padding: 72px 0; }
+    #page-arena .section-alt { background: var(--surface); }
+    #page-arena .section-head { text-align: center; margin-bottom: 48px; }
     #page-arena .kicker {
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--a-accent2);
-      margin-bottom: 10px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent2); margin-bottom: 10px;
     }
-    #page-arena h2 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 800;
-      margin-bottom: 14px;
-    }
-    #page-arena .section-lead {
-      font-size: .95rem;
-      color: var(--a-muted);
-      max-width: 620px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
+    #page-arena h2 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; margin-bottom: 14px; }
+    #page-arena .section-lead { font-size: .95rem; color: var(--muted); max-width: 620px; margin: 0 auto; line-height: 1.7; }
     #page-arena h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 
-    /* ── cards ── */
-    #page-arena .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 18px;
-    }
+    /* cards */
+    #page-arena .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
     #page-arena .card {
-      background: var(--a-surface);
-      border: 1px solid var(--a-border);
-      border-radius: 12px;
-      padding: 24px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px;
       transition: border-color .2s, transform .2s;
     }
-    #page-arena .card:hover {
-      border-color: var(--a-accent);
-      transform: translateY(-2px);
-    }
-    #page-arena .card p { font-size: .88rem; color: var(--a-muted); line-height: 1.6; }
+    #page-arena .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    #page-arena .card p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
 
-    /* ── steps ── */
+    /* steps */
     #page-arena .steps {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 24px;
-      counter-reset: none;
+      list-style: none; display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px;
     }
-    #page-arena .steps li {
-      background: var(--a-bg);
-      border: 1px solid var(--a-border);
-      border-radius: 12px;
-      padding: 24px;
-    }
+    #page-arena .steps li { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
     #page-arena .step-n {
-      display: inline-block;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .1em;
-      color: var(--a-accent);
-      background: rgba(59,130,246,.12);
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-bottom: 10px;
+      display: inline-block; font-size: .72rem; font-weight: 800;
+      letter-spacing: .1em; color: var(--accent);
+      background: rgba(59,130,246,.12); padding: 3px 10px;
+      border-radius: 999px; margin-bottom: 10px;
     }
-    #page-arena .steps p { font-size: .85rem; color: var(--a-muted); line-height: 1.6; margin-top: 4px; }
+    #page-arena .steps p { font-size: .85rem; color: var(--muted); line-height: 1.6; margin-top: 4px; }
 
-    /* ── brief ── */
-    #page-arena .brief {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 32px;
-      align-items: start;
-    }
+    /* brief */
+    #page-arena .brief { display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; }
     @media (max-width: 760px) { #page-arena .brief { grid-template-columns: 1fr; } }
-    #page-arena .brief-main {
-      background: var(--a-surface);
-      border: 1px solid var(--a-border);
-      border-radius: 12px;
-      padding: 28px;
-    }
-    #page-arena .brief-main p { font-size: .9rem; color: var(--a-muted); line-height: 1.7; margin: 10px 0; }
+    #page-arena .brief-main { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+    #page-arena .brief-main p { font-size: .9rem; color: var(--muted); line-height: 1.7; margin: 10px 0; }
     #page-arena .ticks { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-    #page-arena .ticks li {
-      font-size: .88rem;
-      color: var(--a-muted);
-      padding-left: 20px;
-      position: relative;
-    }
-    #page-arena .ticks li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--a-green);
-      font-weight: 700;
-    }
-    #page-arena .brief-meta {
-      background: var(--a-surface);
-      border: 1px solid var(--a-border);
-      border-radius: 12px;
-      padding: 24px;
-    }
+    #page-arena .ticks li { font-size: .88rem; color: var(--muted); padding-left: 20px; position: relative; }
+    #page-arena .ticks li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+    #page-arena .brief-meta { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
     #page-arena .brief-meta dl { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
     #page-arena .brief-meta dt {
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--a-accent2);
-      margin-bottom: 2px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent2); margin-bottom: 2px;
     }
-    #page-arena .brief-meta dd { font-size: .88rem; color: var(--a-muted); }
+    #page-arena .brief-meta dd { font-size: .88rem; color: var(--muted); }
 
-    /* ── leaderboard ── */
-    #page-arena .lb-table {
-      border: 1px solid var(--a-border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
+    /* leaderboard */
+    #page-arena .lb-table { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     #page-arena .lb-row {
-      display: grid;
-      grid-template-columns: 40px 1fr 120px 80px 100px;
-      gap: 0;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--a-border);
-      font-size: .88rem;
-      align-items: center;
+      display: grid; grid-template-columns: 40px 1fr 120px 80px 100px;
+      padding: 14px 20px; border-bottom: 1px solid var(--border);
+      font-size: .88rem; align-items: center;
     }
     #page-arena .lb-row:last-child { border-bottom: none; }
     #page-arena .lb-head {
-      background: var(--a-surface);
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--a-muted);
+      background: var(--surface); font-size: .72rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
     }
-    #page-arena .lb-row:not(.lb-head):first-of-type { background: rgba(59,130,246,.05); }
-    #page-arena .b {
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-size: .72rem;
-      font-weight: 700;
-      background: rgba(100,116,139,.2);
-      color: var(--a-muted);
-    }
-    #page-arena .b.gold { background: rgba(234,179,8,.15); color: #eab308; }
+    #page-arena .b { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .72rem; font-weight: 700; background: rgba(100,116,139,.2); color: var(--muted); }
+    #page-arena .b.gold   { background: rgba(234,179,8,.15); color: #eab308; }
     #page-arena .b.silver { background: rgba(148,163,184,.15); color: #94a3b8; }
-    #page-arena .hint { font-size: .78rem; color: var(--a-muted); margin-top: 12px; text-align: center; }
+    #page-arena .hint { font-size: .78rem; color: var(--muted); margin-top: 12px; text-align: center; }
     @media (max-width: 600px) {
       #page-arena .lb-row { grid-template-columns: 30px 1fr 70px; }
       #page-arena .lb-row span:nth-child(3),
       #page-arena .lb-row span:nth-child(5) { display: none; }
     }
 
-    /* ── trust ── */
-    #page-arena .trust-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-    #page-arena .trust-card {
-      background: var(--a-surface);
-      border: 1px solid var(--a-border);
-      border-radius: 12px;
-      padding: 22px;
-    }
+    /* trust */
+    #page-arena .trust-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin-bottom: 24px; }
+    #page-arena .trust-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
     #page-arena .trust-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-    #page-arena .trust-card li { font-size: .84rem; color: var(--a-muted); line-height: 1.5; }
-    #page-arena .trust-card li strong { color: var(--a-text); }
+    #page-arena .trust-card li { font-size: .84rem; color: var(--muted); line-height: 1.5; }
+    #page-arena .trust-card li strong { color: var(--text); }
     #page-arena .dpo-card {
-      background: rgba(59,130,246,.08);
-      border: 1px solid rgba(59,130,246,.25);
-      border-radius: 10px;
-      padding: 16px 22px;
-      font-size: .88rem;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
+      background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.25);
+      border-radius: 10px; padding: 16px 22px; font-size: .88rem;
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
     }
-    #page-arena .dpo-card strong { color: var(--a-accent2); }
+    #page-arena .dpo-card strong { color: var(--accent2); }
 
-    /* ── apply / CTA ── */
+    /* apply */
     #page-arena .section-cta { background: linear-gradient(135deg, #0f1929, #0b1220); }
-    #page-arena .apply-grid {
-      display: grid;
-      grid-template-columns: 1fr 480px;
-      gap: 48px;
-      align-items: start;
-    }
+    #page-arena .apply-grid { display: grid; grid-template-columns: 1fr 480px; gap: 48px; align-items: start; }
     @media (max-width: 860px) { #page-arena .apply-grid { grid-template-columns: 1fr; } }
     #page-arena .apply-grid > div > h2 { font-size: 1.6rem; margin-bottom: 10px; }
-    #page-arena .apply-grid > div > p { color: var(--a-muted); font-size: .9rem; line-height: 1.6; }
-    #page-arena .apply-form {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      background: var(--a-surface);
-      border: 1px solid var(--a-border);
-      border-radius: 14px;
-      padding: 28px;
-    }
-    #page-arena .apply-form label {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--a-muted);
-    }
+    #page-arena .apply-grid > div > p  { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+    #page-arena .apply-form { display: flex; flex-direction: column; gap: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
+    #page-arena .apply-form label { display: flex; flex-direction: column; gap: 5px; font-size: .82rem; font-weight: 600; color: var(--muted); }
     #page-arena .apply-form input[type=text],
     #page-arena .apply-form input[type=email] {
-      padding: 10px 14px;
-      background: var(--a-bg);
-      border: 1px solid var(--a-border);
-      border-radius: 8px;
-      color: var(--a-text);
-      font-size: .9rem;
-      outline: none;
+      padding: 10px 14px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-size: .9rem; outline: none;
       transition: border-color .2s;
     }
     #page-arena .apply-form input[type=text]:focus,
-    #page-arena .apply-form input[type=email]:focus { border-color: var(--a-accent); }
-    #page-arena .apply-form label.check {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: .83rem;
-      color: var(--a-muted);
-      line-height: 1.5;
-    }
+    #page-arena .apply-form input[type=email]:focus { border-color: var(--accent); }
+    #page-arena .apply-form label.check { flex-direction: row; align-items: flex-start; gap: 10px; font-size: .83rem; color: var(--muted); line-height: 1.5; }
     #page-arena .apply-form label.check input { margin-top: 3px; flex-shrink: 0; }
-    #page-arena .form-note { font-size: .75rem; color: var(--a-muted); opacity: .7; }
+    #page-arena .form-note { font-size: .75rem; color: var(--muted); opacity: .7; }
 
-    /* ── footer ── */
-    #page-arena .site-footer {
-      background: #060d1a;
-      border-top: 1px solid var(--a-border);
-      padding: 36px 0;
-    }
-    #page-arena .footer-grid {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    #page-arena .brand-text { font-weight: 800; font-size: .9rem; letter-spacing: .06em; }
-    #page-arena .brand-text em { color: var(--a-accent2); font-style: normal; }
-    #page-arena .muted { color: var(--a-muted); }
+    /* footer */
+    #page-arena .site-footer { background: #060d1a; border-top: 1px solid var(--border); padding: 36px 0; }
+    #page-arena .footer-grid { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+    #page-arena .brand-text  { font-weight: 800; font-size: .9rem; letter-spacing: .06em; }
+    #page-arena .brand-text em { color: var(--accent2); font-style: normal; }
+    #page-arena .muted { color: var(--muted); }
     #page-arena .small { font-size: .78rem; }
     #page-arena .site-footer nav { display: flex; gap: 16px; flex-wrap: wrap; }
-    #page-arena .site-footer nav a {
-      font-size: .8rem;
-      color: var(--a-muted);
-      text-decoration: none;
-    }
-    #page-arena .site-footer nav a:hover { color: var(--a-text); }
+    #page-arena .site-footer nav a { font-size: .8rem; color: var(--muted); text-decoration: none; }
+    #page-arena .site-footer nav a:hover { color: var(--text); }
 
-    /* ── cookie banner ── */
-    #page-arena .cookie-banner {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #0f1929;
-      border-top: 1px solid var(--a-border);
-      z-index: 9000;
-      padding: 20px 0;
+    /* cookie banner */
+    #cookieBanner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #0f1929; border-top: 1px solid #1e293b;
+      z-index: 9000; padding: 20px 0;
     }
-    #page-arena .cookie-banner[hidden] { display: none; }
-    #page-arena .ck-grid {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    #page-arena .ck-grid > div { flex: 1; min-width: 260px; }
-    #page-arena .ck-grid h3 { font-size: .95rem; margin-bottom: 5px; }
-    #page-arena .ck-grid p { font-size: .82rem; color: var(--a-muted); line-height: 1.5; }
-    #page-arena .ck-fields {
-      border: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    #page-arena .ck-fields label { display: flex; gap: 8px; font-size: .83rem; color: var(--a-muted); align-items: center; }
-    #page-arena .ck-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .ck-grid { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+    .ck-grid > div { flex: 1; min-width: 260px; }
+    .ck-grid h3 { font-size: .95rem; margin-bottom: 5px; color: #e2e8f0; }
+    .ck-grid p  { font-size: .82rem; color: #94a3b8; line-height: 1.5; }
+    .ck-fields  { border: none; display: flex; flex-direction: column; gap: 6px; }
+    .ck-fields label { display: flex; gap: 8px; font-size: .83rem; color: #94a3b8; align-items: center; }
+    .ck-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
-    /* ════════════════════════════════════════════════════════
-       ██████  SMART HR PAGE CSS
-    ════════════════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════
+       SMART HR  (#page-hr)
+    ══════════════════════════════════════════ */
     #page-hr {
       min-height: 100vh;
       background: linear-gradient(135deg, #004E89 0%, #1a237e 50%, #002244 100%);
       color: #1a1a1a;
-      padding: 24px 16px 48px;
-      padding-top: 77px; /* tab-bar 53px + 24px */
+      padding: 77px 16px 48px;
     }
-    #page-hr h1  { font-size: 2rem;    font-weight: 700; color: #fff; }
-    #page-hr h2  { font-size: 1.15rem; font-weight: 600; }
-    #page-hr h3  { font-size: 1rem;    font-weight: 600; }
+    #page-hr h1 { font-size: 2rem;    font-weight: 700; color: #fff; }
+    #page-hr h2 { font-size: 1.15rem; font-weight: 600; }
+    #page-hr h3 { font-size: 1rem;    font-weight: 600; }
     #page-hr .page-wrapper { max-width: 1160px; margin: 0 auto; }
-    /* header */
+
     #page-hr .header { text-align: center; margin-bottom: 28px; }
     #page-hr .header .subtitle { color: rgba(255,255,255,.85); font-size: .95rem; margin: 6px 0 16px; }
     #page-hr .header-chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
     #page-hr .chip {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 14px; border-radius: 999px;
-      font-size: .8rem; font-weight: 600;
+      padding: 5px 14px; border-radius: 999px; font-size: .8rem; font-weight: 600;
       backdrop-filter: blur(8px);
       background: rgba(255,255,255,.18); color: #fff;
       border: 1px solid rgba(255,255,255,.25);
     }
-    /* 2-col grid */
     #page-hr .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
     @media (max-width: 860px) { #page-hr .grid-2 { grid-template-columns: 1fr; } }
-    /* card */
+
     #page-hr .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.15); overflow: hidden; }
-    #page-hr .card-header {
-      padding: 16px 20px; border-bottom: 1px solid #f0f0f0;
-      display: flex; align-items: center; gap: 8px;
-      font-size: 1rem; font-weight: 600;
-    }
+    #page-hr .card-header { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 600; }
     #page-hr .card-body { padding: 20px; }
-    /* form */
+
     #page-hr .form-group { margin-bottom: 14px; }
     #page-hr .form-group label { display: block; font-size: .82rem; font-weight: 600; color: #555; margin-bottom: 5px; }
     #page-hr .form-control {
-      width: 100%; padding: 10px 13px;
-      border: 1.5px solid #d0d7de; border-radius: 8px;
-      font-size: .92rem; color: #1a1a1a; background: #fff;
-      outline: none; transition: border-color .2s;
-      appearance: none; -webkit-appearance: none;
+      width: 100%; padding: 10px 13px; border: 1.5px solid #d0d7de; border-radius: 8px;
+      font-size: .92rem; color: #1a1a1a; background: #fff; outline: none;
+      transition: border-color .2s; appearance: none; -webkit-appearance: none;
     }
     #page-hr .form-control:focus { border-color: #004E89; }
     #page-hr select.form-control {
@@ -617,42 +334,29 @@
       background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; cursor: pointer;
     }
     #page-hr select.form-control option:disabled { color: #aaa; }
-    /* alert */
-    #page-hr .alert {
-      padding: 10px 14px; border-radius: 8px; font-size: .88rem;
-      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
-    }
+
+    #page-hr .alert { padding: 10px 14px; border-radius: 8px; font-size: .88rem; display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
     #page-hr .alert-info    { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
     #page-hr .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
-    /* buttons */
-    #page-hr .btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 20px; border-radius: 8px;
-      font-size: .9rem; font-weight: 600; border: none; cursor: pointer;
-      transition: opacity .2s, transform .1s;
-    }
-    #page-hr .btn:active { transform: scale(.97); }
-    #page-hr .btn-success { background: #1DB954; color: #fff; }
+
+    #page-hr .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px; font-size: .9rem; font-weight: 600; border: none; cursor: pointer; transition: opacity .2s, transform .1s; }
+    #page-hr .btn:active    { transform: scale(.97); }
+    #page-hr .btn-success   { background: #1DB954; color: #fff; }
     #page-hr .btn-success:hover { background: #1aaa4d; }
-    #page-hr .btn-outline { background: transparent; color: #004E89; border: 1.5px solid #004E89; }
+    #page-hr .btn-outline   { background: transparent; color: #004E89; border: 1.5px solid #004E89; }
     #page-hr .btn-outline:hover { background: #eff6ff; }
-    #page-hr .btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-    #page-hr .btn:disabled { opacity: .4; cursor: not-allowed; }
-    /* email preview */
-    #page-hr .email-preview-box {
-      background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px;
-      padding: 18px; font-size: .88rem; line-height: 1.65;
-      white-space: pre-wrap; min-height: 200px;
-    }
+    #page-hr .btn-row       { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    #page-hr .btn:disabled  { opacity: .4; cursor: not-allowed; }
+
+    #page-hr .email-preview-box { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px; font-size: .88rem; line-height: 1.65; white-space: pre-wrap; min-height: 200px; }
     #page-hr .email-subject-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
     #page-hr .email-subject-label { font-size: .75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .5px; }
-    #page-hr .email-subject-text { font-weight: 700; color: #004E89; font-size: .95rem; }
+    #page-hr .email-subject-text  { font-weight: 700; color: #004E89; font-size: .95rem; }
     #page-hr .email-body { color: #374151; }
-    /* placeholder */
     #page-hr .placeholder-box { text-align: center; padding: 40px 20px; color: #9ca3af; }
     #page-hr .placeholder-box svg { margin-bottom: 12px; opacity: .4; }
     #page-hr .placeholder-box p { font-size: .9rem; }
-    /* accordion */
+
     #page-hr .accordion-header {
       background: #f9fafb; padding: 12px 16px; cursor: pointer;
       display: flex; align-items: center; justify-content: space-between;
@@ -664,7 +368,7 @@
     #page-hr .accordion-header.open .arrow { transform: rotate(180deg); }
     #page-hr .accordion-body { display: none; padding: 14px 16px; gap: 10px; flex-direction: column; }
     #page-hr .accordion-body.open { display: flex; }
-    /* tags */
+
     #page-hr .tag-item { padding: 10px 12px; border-radius: 8px; font-size: .83rem; }
     #page-hr .tag-item-positive { background: #f0f9ff; border: 1px solid #bae6fd; }
     #page-hr .tag-item-reject   { background: #fff7ed; border: 1px solid #fed7aa; }
@@ -672,31 +376,28 @@
     #page-hr .tag-label-positive { background: #004E89; color: #fff; }
     #page-hr .tag-label-reject   { background: #FF6B35; color: #fff; }
     #page-hr .tag-item .tag-desc { color: #374151; line-height: 1.5; }
-    /* examples */
+
     #page-hr .example-card { border-radius: 10px; overflow: hidden; margin-bottom: 14px; border: 1px solid #e5e7eb; }
     #page-hr .example-card-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .9rem; }
     #page-hr .ex-keep   { border-left: 5px solid #2196F3; }
     #page-hr .ex-offer  { border-left: 5px solid #1DB954; }
     #page-hr .ex-reject { border-left: 5px solid #FF6B35; }
-    #page-hr .ex-keep .example-card-header   { background: #eff6ff; color: #1d4ed8; }
-    #page-hr .ex-offer .example-card-header  { background: #f0fdf4; color: #166534; }
+    #page-hr .ex-keep  .example-card-header { background: #eff6ff; color: #1d4ed8; }
+    #page-hr .ex-offer .example-card-header { background: #f0fdf4; color: #166534; }
     #page-hr .ex-reject .example-card-header { background: #fff7ed; color: #c2410c; }
     #page-hr .example-card-body { padding: 12px 16px; font-size: .85rem; color: #4b5563; background: #fff; }
     #page-hr .example-card-body strong { color: #1a1a1a; }
-    /* footer */
+
     #page-hr .footer { text-align: center; margin-top: 32px; }
-    #page-hr .footer-inner {
-      display: inline-block; background: rgba(255,255,255,.1);
-      backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,.2);
-      border-radius: 16px; padding: 20px 36px; color: #fff;
-    }
+    #page-hr .footer-inner { display: inline-block; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,.2); border-radius: 16px; padding: 20px 36px; color: #fff; }
     #page-hr .footer-inner h3 { font-size: 1.05rem; margin: 6px 0 4px; }
     #page-hr .footer-inner p  { font-size: .82rem; color: rgba(255,255,255,.8); }
-    /* constraints */
+
     #page-hr .constraints-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
     #page-hr .constraints-list li { font-size: .86rem; color: #374151; display: flex; gap: 8px; }
     #page-hr .constraints-list li span:first-child { flex-shrink: 0; }
-    /* toast */
+
+    /* Toast */
     #hr-toast {
       position: fixed; bottom: 24px; right: 24px;
       background: #1a1a1a; color: #fff;
@@ -705,7 +406,7 @@
       transform: translateY(80px); opacity: 0;
       transition: transform .3s, opacity .3s; max-width: 320px;
     }
-    #hr-toast.show { transform: translateY(0); opacity: 1; }
+    #hr-toast.show    { transform: translateY(0); opacity: 1; }
     #hr-toast .toast-title { font-weight: 700; margin-bottom: 2px; }
     #hr-toast .toast-desc  { font-size: .82rem; opacity: .8; }
     #hr-toast.success { background: #166534; }
@@ -714,18 +415,22 @@
 </head>
 <body>
 
-<!-- ═══════════════ TAB SWITCHER ═══════════════ -->
+<!-- ═══════════════ TAB BAR ═══════════════ -->
 <div id="tab-bar" role="tablist">
-  <button class="tab-btn active" id="tab-arena-btn" role="tab" aria-selected="true"  aria-controls="page-arena" onclick="showPage('arena')">
+  <button class="tab-btn active" id="tab-arena-btn" role="tab"
+    aria-selected="true" aria-controls="page-arena"
+    onclick="showPage('arena')">
     <span class="dot"></span> Cosmos Sport Arena
   </button>
-  <button class="tab-btn"        id="tab-hr-btn"    role="tab" aria-selected="false" aria-controls="page-hr"    onclick="showPage('hr')">
+  <button class="tab-btn" id="tab-hr-btn" role="tab"
+    aria-selected="false" aria-controls="page-hr"
+    onclick="showPage('hr')">
     <span class="dot"></span> Smart HR System
   </button>
 </div>
 
 <!-- ═══════════════ PAGE: ARENA ═══════════════ -->
-<div id="page-arena" class="page active" role="tabpanel" aria-labelledby="tab-arena-btn">
+<div id="page-arena">
 
 <!-- ================= HEADER ================= -->
 <header class="site-header" role="banner">
@@ -734,22 +439,18 @@
       <span class="brand-mark" aria-hidden="true">◆</span>
       <span class="brand-text">COSMOS SPORT <em>ARENA</em></span>
     </a>
-
     <nav class="primary-nav" aria-label="Primary">
-      <a href="#concept" data-i18n="nav.concept">Concept</a>
-      <a href="#how" data-i18n="nav.how">Πώς λειτουργεί</a>
-      <a href="#challenge" data-i18n="nav.challenge">1ος Διαγωνισμός</a>
-      <a href="#leaderboard" data-i18n="nav.leaderboard">Leaderboard</a>
-      <a href="#trust" data-i18n="nav.trust">Trust &amp; Compliance</a>
+      <a href="#concept">Concept</a>
+      <a href="#how">Πώς λειτουργεί</a>
+      <a href="#challenge">1ος Διαγωνισμός</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#trust">Trust &amp; Compliance</a>
     </nav>
-
     <div class="header-actions">
       <button class="lang-toggle" id="langToggle" aria-label="Switch language" aria-pressed="false">
-        <span data-lang-label="el">EL</span>
-        <span class="sep">/</span>
-        <span data-lang-label="en">EN</span>
+        <span>EL</span><span class="sep">/</span><span>EN</span>
       </button>
-      <a class="btn btn-primary" href="#apply" data-i18n="cta.apply">Συμμετοχή</a>
+      <a class="btn btn-primary" href="#apply">Συμμετοχή</a>
     </div>
   </div>
 </header>
@@ -758,19 +459,19 @@
 <section class="hero" id="top">
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow" data-i18n="hero.eyebrow">HR · Talent Acquisition · Cosmos Sport</p>
-      <h1 data-i18n="hero.title">Cosmos Sport Arena</h1>
-      <p class="lead" data-i18n="hero.lead">
-        Η πλατφόρμα διαγωνισμών στρατηγικής & ταλέντου της Cosmos Sport. Δείξε τι αξίζεις σε πραγματικά business challenges. Κερδίσε αναγνώριση. Μπες στο pipeline μας.
+      <p class="eyebrow">HR · Talent Acquisition · Cosmos Sport</p>
+      <h1>Cosmos Sport Arena</h1>
+      <p class="lead">
+        Η πλατφόρμα διαγωνισμών στρατηγικής &amp; ταλέντου της Cosmos Sport. Δείξε τι αξίζεις σε πραγματικά business challenges. Κερδίσε αναγνώριση. Μπες στο pipeline μας.
       </p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#challenge" data-i18n="hero.cta1">Δες το brief</a>
-        <a class="btn btn-ghost" href="#trust" data-i18n="hero.cta2">Πολιτική &amp; Ασφάλεια</a>
+        <a class="btn btn-primary" href="#challenge">Δες το brief</a>
+        <a class="btn btn-ghost"   href="#trust">Πολιτική &amp; Ασφάλεια</a>
       </div>
       <ul class="hero-stats" aria-label="Trust badges">
-        <li><strong>GDPR</strong><span data-i18n="badge.gdpr">Πλήρως συμβατό</span></li>
-        <li><strong>ISO 27001/27701</strong><span data-i18n="badge.iso">Aligned</span></li>
-        <li><strong>WCAG 2.1 AA</strong><span data-i18n="badge.a11y">Προσβάσιμο</span></li>
+        <li><strong>GDPR</strong><span>Πλήρως συμβατό</span></li>
+        <li><strong>ISO 27001/27701</strong><span>Aligned</span></li>
+        <li><strong>WCAG 2.1 AA</strong><span>Προσβάσιμο</span></li>
       </ul>
     </div>
     <div class="hero-visual" aria-hidden="true">
@@ -785,38 +486,17 @@
 <section id="concept" class="section">
   <div class="container">
     <header class="section-head">
-      <p class="kicker" data-i18n="concept.kicker">Concept &amp; Αρχιτεκτονική</p>
-      <h2 data-i18n="concept.title">Ένα ανεξάρτητο microsite, συνδεδεμένο με την Cosmos Sport</h2>
-      <p class="section-lead" data-i18n="concept.lead">
-        Έξι πυλώνες που κάνουν την Arena περισσότερο από έναν διαγωνισμό: ένα live employer-branding asset.
-      </p>
+      <p class="kicker">Concept &amp; Αρχιτεκτονική</p>
+      <h2>Ένα ανεξάρτητο microsite, συνδεδεμένο με την Cosmos Sport</h2>
+      <p class="section-lead">Έξι πυλώνες που κάνουν την Arena περισσότερο από έναν διαγωνισμό: ένα live employer-branding asset.</p>
     </header>
-
     <div class="cards">
-      <article class="card">
-        <h3 data-i18n="concept.c1.t">Live Leaderboard</h3>
-        <p data-i18n="concept.c1.d">Real-time κατάταξη ανά challenge, με ορατότητα στις κορυφαίες υποβολές.</p>
-      </article>
-      <article class="card">
-        <h3 data-i18n="concept.c2.t">Profiles &amp; Portfolio</h3>
-        <p data-i18n="concept.c2.d">Κάθε συμμετέχων χτίζει portfolio υποβολών — μένει ως career asset.</p>
-      </article>
-      <article class="card">
-        <h3 data-i18n="concept.c3.t">Countdown Timer</h3>
-        <p data-i18n="concept.c3.d">Αντίστροφη μέτρηση για κάθε challenge — διαφάνεια στο deadline.</p>
-      </article>
-      <article class="card">
-        <h3 data-i18n="concept.c4.t">Public &amp; Private Rounds</h3>
-        <p data-i18n="concept.c4.d">Ανοιχτή φάση προβολής + κλειστή φάση αξιολόγησης από εμπειρογνώμονες.</p>
-      </article>
-      <article class="card">
-        <h3 data-i18n="concept.c5.t">Analytics Dashboard</h3>
-        <p data-i18n="concept.c5.d">Per-candidate analytics για το HR — με anonymized aggregations για το κοινό.</p>
-      </article>
-      <article class="card">
-        <h3 data-i18n="concept.c6.t">Badges &amp; Recognition</h3>
-        <p data-i18n="concept.c6.d">Σύστημα badges για κορυφαίες επιδόσεις — fast-track στο talent pipeline.</p>
-      </article>
+      <article class="card"><h3>Live Leaderboard</h3><p>Real-time κατάταξη ανά challenge, με ορατότητα στις κορυφαίες υποβολές.</p></article>
+      <article class="card"><h3>Profiles &amp; Portfolio</h3><p>Κάθε συμμετέχων χτίζει portfolio υποβολών — μένει ως career asset.</p></article>
+      <article class="card"><h3>Countdown Timer</h3><p>Αντίστροφη μέτρηση για κάθε challenge — διαφάνεια στο deadline.</p></article>
+      <article class="card"><h3>Public &amp; Private Rounds</h3><p>Ανοιχτή φάση προβολής + κλειστή φάση αξιολόγησης από εμπειρογνώμονες.</p></article>
+      <article class="card"><h3>Analytics Dashboard</h3><p>Per-candidate analytics για το HR — με anonymized aggregations για το κοινό.</p></article>
+      <article class="card"><h3>Badges &amp; Recognition</h3><p>Σύστημα badges για κορυφαίες επιδόσεις — fast-track στο talent pipeline.</p></article>
     </div>
   </div>
 </section>
@@ -825,181 +505,133 @@
 <section id="how" class="section section-alt">
   <div class="container">
     <header class="section-head">
-      <p class="kicker" data-i18n="how.kicker">Λειτουργία</p>
-      <h2 data-i18n="how.title">Από το brief στο livestream — σε 5 βήματα</h2>
+      <p class="kicker">Λειτουργία</p>
+      <h2>Από το brief στο livestream — σε 5 βήματα</h2>
     </header>
-
     <ol class="steps">
-      <li>
-        <span class="step-n">01</span>
-        <h3 data-i18n="how.s1.t">Άνοιγμα Competition</h3>
-        <p data-i18n="how.s1.d">Δημοσιεύεται θεματολογία, διάρκεια, deliverables, κριτήρια.</p>
-      </li>
-      <li>
-        <span class="step-n">02</span>
-        <h3 data-i18n="how.s2.t">Εγγραφή &amp; Brief</h3>
-        <p data-i18n="how.s2.d">Συμμετέχοντες κάνουν εγγραφή, λαμβάνουν brief, δηλώνουν ατομική/ομαδική συμμετοχή.</p>
-      </li>
-      <li>
-        <span class="step-n">03</span>
-        <h3 data-i18n="how.s3.t">Υποβολή εντός Deadline</h3>
-        <p data-i18n="how.s3.d">Δουλειά ατομικά ή σε team — υποβολή λύσης μέσα στο countdown.</p>
-      </li>
-      <li>
-        <span class="step-n">04</span>
-        <h3 data-i18n="how.s4.t">Αξιολόγηση από Επιτροπή</h3>
-        <p data-i18n="how.s4.d">Μεικτή επιτροπή: εσωτερικά στελέχη Cosmos Sport + εξωτερικοί experts.</p>
-      </li>
-      <li>
-        <span class="step-n">05</span>
-        <h3 data-i18n="how.s5.t">Live Announcement</h3>
-        <p data-i18n="how.s5.d">Αποτελέσματα live σε streaming event — networking + offers.</p>
-      </li>
+      <li><span class="step-n">01</span><h3>Άνοιγμα Competition</h3><p>Δημοσιεύεται θεματολογία, διάρκεια, deliverables, κριτήρια.</p></li>
+      <li><span class="step-n">02</span><h3>Εγγραφή &amp; Brief</h3><p>Συμμετέχοντες κάνουν εγγραφή, λαμβάνουν brief, δηλώνουν ατομική/ομαδική συμμετοχή.</p></li>
+      <li><span class="step-n">03</span><h3>Υποβολή εντός Deadline</h3><p>Δουλειά ατομικά ή σε team — υποβολή λύσης μέσα στο countdown.</p></li>
+      <li><span class="step-n">04</span><h3>Αξιολόγηση από Επιτροπή</h3><p>Μεικτή επιτροπή: εσωτερικά στελέχη Cosmos Sport + εξωτερικοί experts.</p></li>
+      <li><span class="step-n">05</span><h3>Live Announcement</h3><p>Αποτελέσματα live σε streaming event — networking + offers.</p></li>
     </ol>
   </div>
 </section>
 
-<!-- ================= 1ος ΔΙΑΓΩΝΙΣΜΟΣ ================= -->
+<!-- ================= CHALLENGE ================= -->
 <section id="challenge" class="section">
   <div class="container">
     <header class="section-head">
-      <p class="kicker" data-i18n="ch.kicker">1ος Διαγωνισμός · 2025</p>
-      <h2 data-i18n="ch.title">The Next Play — Cosmos Sport Commercial Strategy Challenge</h2>
-      <p class="section-lead" data-i18n="ch.lead">
-        Σχεδίασε τη στρατηγική που θα φέρει τον αθλητισμό πιο κοντά στον Έλληνα καταναλωτή.
-      </p>
+      <p class="kicker">1ος Διαγωνισμός · 2025</p>
+      <h2>The Next Play — Cosmos Sport Commercial Strategy Challenge</h2>
+      <p class="section-lead">Σχεδίασε τη στρατηγική που θα φέρει τον αθλητισμό πιο κοντά στον Έλληνα καταναλωτή.</p>
     </header>
-
     <div class="brief">
       <div class="brief-main">
-        <h3 data-i18n="ch.brief.t">Brief</h3>
-        <p data-i18n="ch.brief.d">
-          Ανάπτυξε ολοκληρωμένη εμπορική στρατηγική για ένα τμήμα της Cosmos Sport (π.χ. κατηγορία Running) για το επόμενο 12μηνο. Η πρόταση πρέπει να καλύπτει:
-        </p>
+        <h3>Brief</h3>
+        <p>Ανάπτυξε ολοκληρωμένη εμπορική στρατηγική για ένα τμήμα της Cosmos Sport (π.χ. κατηγορία Running) για το επόμενο 12μηνο. Η πρόταση πρέπει να καλύπτει:</p>
         <ul class="ticks">
-          <li data-i18n="ch.brief.l1">Ανάλυση αγοράς &amp; ανταγωνιστικού τοπίου</li>
-          <li data-i18n="ch.brief.l2">Τμηματοποίηση πελατολογίου (segmentation)</li>
-          <li data-i18n="ch.brief.l3">Στρατηγική τιμολόγησης &amp; προωθητικών ενεργειών</li>
-          <li data-i18n="ch.brief.l4">Go-to-market plan (online + offline)</li>
-          <li data-i18n="ch.brief.l5">KPIs μέτρησης επιτυχίας &amp; χρονοδιάγραμμα υλοποίησης</li>
+          <li>Ανάλυση αγοράς &amp; ανταγωνιστικού τοπίου</li>
+          <li>Τμηματοποίηση πελατολογίου (segmentation)</li>
+          <li>Στρατηγική τιμολόγησης &amp; προωθητικών ενεργειών</li>
+          <li>Go-to-market plan (online + offline)</li>
+          <li>KPIs μέτρησης επιτυχίας &amp; χρονοδιάγραμμα υλοποίησης</li>
         </ul>
       </div>
-
       <aside class="brief-meta">
         <dl>
-          <dt data-i18n="ch.meta.format">Format</dt><dd data-i18n="ch.meta.format.v">Ατομικά ή ομάδες έως 4</dd>
-          <dt data-i18n="ch.meta.deliverable">Deliverable</dt><dd data-i18n="ch.meta.deliverable.v">PDF strategy deck (max 15 σελίδες)</dd>
-          <dt data-i18n="ch.meta.deadline">Deadline</dt><dd>—</dd>
-          <dt data-i18n="ch.meta.prize">Recognition</dt><dd data-i18n="ch.meta.prize.v">Fast-track interview + badge</dd>
+          <dt>Format</dt><dd>Ατομικά ή ομάδες έως 4</dd>
+          <dt>Deliverable</dt><dd>PDF strategy deck (max 15 σελίδες)</dd>
+          <dt>Deadline</dt><dd>—</dd>
+          <dt>Recognition</dt><dd>Fast-track interview + badge</dd>
         </dl>
-        <a class="btn btn-primary full" href="#apply" data-i18n="ch.cta">Δήλωσε συμμετοχή</a>
+        <a class="btn btn-primary full" href="#apply">Δήλωσε συμμετοχή</a>
       </aside>
     </div>
   </div>
 </section>
 
-<!-- ================= LEADERBOARD PREVIEW ================= -->
+<!-- ================= LEADERBOARD ================= -->
 <section id="leaderboard" class="section section-alt">
   <div class="container">
     <header class="section-head">
-      <p class="kicker" data-i18n="lb.kicker">Live Leaderboard — preview</p>
-      <h2 data-i18n="lb.title">Διαφάνεια στην κατάταξη, ιδιωτικότητα στα δεδομένα</h2>
-      <p class="section-lead" data-i18n="lb.lead">
-        Δημόσια εμφανίζεται μόνο το display name (ψευδώνυμο επιλογής συμμετέχοντα) και το score. Καμία ταυτοποίηση χωρίς ρητή συγκατάθεση.
-      </p>
+      <p class="kicker">Live Leaderboard — preview</p>
+      <h2>Διαφάνεια στην κατάταξη, ιδιωτικότητα στα δεδομένα</h2>
+      <p class="section-lead">Δημόσια εμφανίζεται μόνο το display name (ψευδώνυμο) και το score. Καμία ταυτοποίηση χωρίς ρητή συγκατάθεση.</p>
     </header>
-
     <div class="lb-table" role="table" aria-label="Leaderboard preview">
-      <div class="lb-row lb-head" role="row">
-        <span role="columnheader">#</span>
-        <span role="columnheader" data-i18n="lb.col.name">Display Name</span>
-        <span role="columnheader" data-i18n="lb.col.team">Team</span>
-        <span role="columnheader" data-i18n="lb.col.score">Score</span>
-        <span role="columnheader" data-i18n="lb.col.badge">Badge</span>
-      </div>
+      <div class="lb-row lb-head" role="row"><span>#</span><span>Display Name</span><span>Team</span><span>Score</span><span>Badge</span></div>
       <div class="lb-row" role="row"><span>1</span><span>strategos_07</span><span>—</span><span>94.2</span><span class="b gold">★ Top</span></div>
       <div class="lb-row" role="row"><span>2</span><span>aueb_runner</span><span>Pacers</span><span>91.8</span><span class="b silver">Finalist</span></div>
       <div class="lb-row" role="row"><span>3</span><span>data_eva</span><span>—</span><span>89.6</span><span class="b silver">Finalist</span></div>
       <div class="lb-row" role="row"><span>4</span><span>greekbiz</span><span>NextPlay</span><span>87.1</span><span class="b">Shortlist</span></div>
       <div class="lb-row" role="row"><span>5</span><span>brandlab</span><span>—</span><span>85.3</span><span class="b">Shortlist</span></div>
     </div>
-    <p class="hint" data-i18n="lb.hint">* Mock data για επίδειξη UI. Καμία πραγματική προσωπική πληροφορία δεν αποκαλύπτεται.</p>
+    <p class="hint">* Mock data για επίδειξη UI. Καμία πραγματική προσωπική πληροφορία δεν αποκαλύπτεται.</p>
   </div>
 </section>
 
-<!-- ================= TRUST & COMPLIANCE ================= -->
+<!-- ================= TRUST ================= -->
 <section id="trust" class="section">
   <div class="container">
     <header class="section-head">
-      <p class="kicker" data-i18n="trust.kicker">Trust · Compliance · Governance</p>
-      <h2 data-i18n="trust.title">Σχεδιασμένη με Privacy &amp; Security by Design</h2>
-      <p class="section-lead" data-i18n="trust.lead">
-        Η Arena είναι HR-grade πλατφόρμα. Επεξεργαζόμαστε υποψηφιότητες σύμφωνα με τον Κανονισμό (ΕΕ) 2016/679 (GDPR), τον Ν. 4624/2019, την οδηγία ΑΠΔΠΧ για διαδικασίες επιλογής προσωπικού, και τον Ν. 3304/2005 περί ίσης μεταχείρισης.
-      </p>
+      <p class="kicker">Trust · Compliance · Governance</p>
+      <h2>Σχεδιασμένη με Privacy &amp; Security by Design</h2>
+      <p class="section-lead">Η Arena είναι HR-grade πλατφόρμα. Επεξεργαζόμαστε υποψηφιότητες σύμφωνα με τον Κανονισμό (ΕΕ) 2016/679 (GDPR), τον Ν. 4624/2019, και τον Ν. 3304/2005 περί ίσης μεταχείρισης.</p>
     </header>
-
     <div class="trust-grid">
       <article class="trust-card">
-        <h3 data-i18n="trust.t1">Νομική βάση επεξεργασίας</h3>
+        <h3>Νομική βάση επεξεργασίας</h3>
         <ul>
-          <li data-i18n="trust.t1.l1"><strong>Άρθρο 6(1)(b) GDPR</strong> — εκτέλεση προσυμβατικών μέτρων (αίτηση συμμετοχής).</li>
-          <li data-i18n="trust.t1.l2"><strong>Άρθρο 6(1)(a) GDPR</strong> — συγκατάθεση για marketing &amp; talent pool retention.</li>
-          <li data-i18n="trust.t1.l3"><strong>Άρθρο 6(1)(f) GDPR</strong> — έννομο συμφέρον για ασφάλεια &amp; fraud prevention.</li>
+          <li><strong>Άρθρο 6(1)(b) GDPR</strong> — εκτέλεση προσυμβατικών μέτρων.</li>
+          <li><strong>Άρθρο 6(1)(a) GDPR</strong> — συγκατάθεση για marketing &amp; talent pool.</li>
+          <li><strong>Άρθρο 6(1)(f) GDPR</strong> — έννομο συμφέρον για ασφάλεια.</li>
         </ul>
       </article>
-
       <article class="trust-card">
-        <h3 data-i18n="trust.t2">Δικαιώματα υποκειμένου</h3>
+        <h3>Δικαιώματα υποκειμένου</h3>
         <ul>
-          <li data-i18n="trust.t2.l1">Πρόσβαση, διόρθωση, διαγραφή, περιορισμός, φορητότητα, εναντίωση.</li>
-          <li data-i18n="trust.t2.l2">Ανάκληση συγκατάθεσης ανά πάσα στιγμή.</li>
-          <li data-i18n="trust.t2.l3">Καταγγελία στην ΑΠΔΠΧ (<a href="https://www.dpa.gr" rel="noopener">www.dpa.gr</a>).</li>
+          <li>Πρόσβαση, διόρθωση, διαγραφή, περιορισμός, φορητότητα, εναντίωση.</li>
+          <li>Ανάκληση συγκατάθεσης ανά πάσα στιγμή.</li>
+          <li>Καταγγελία στην ΑΠΔΠΧ (<a href="https://www.dpa.gr" rel="noopener">www.dpa.gr</a>).</li>
         </ul>
       </article>
-
       <article class="trust-card">
-        <h3 data-i18n="trust.t3">Διατήρηση δεδομένων</h3>
+        <h3>Διατήρηση δεδομένων</h3>
         <ul>
-          <li data-i18n="trust.t3.l1">Μη επιλεγέντες υποψήφιοι: <strong>6 μήνες</strong> μετά τον διαγωνισμό (default).</li>
-          <li data-i18n="trust.t3.l2">Talent pool με συγκατάθεση: <strong>έως 24 μήνες</strong>, με ετήσια ανανέωση.</li>
-          <li data-i18n="trust.t3.l3">Logs ασφαλείας: <strong>12 μήνες</strong> (έννομο συμφέρον).</li>
+          <li>Μη επιλεγέντες υποψήφιοι: <strong>6 μήνες</strong> μετά τον διαγωνισμό.</li>
+          <li>Talent pool με συγκατάθεση: <strong>έως 24 μήνες</strong>, με ετήσια ανανέωση.</li>
+          <li>Logs ασφαλείας: <strong>12 μήνες</strong> (έννομο συμφέρον).</li>
         </ul>
       </article>
-
       <article class="trust-card">
-        <h3 data-i18n="trust.t4">Τεχνικά &amp; οργανωτικά μέτρα</h3>
+        <h3>Τεχνικά &amp; οργανωτικά μέτρα</h3>
         <ul>
-          <li data-i18n="trust.t4.l1">TLS 1.3 in transit, AES-256 at rest, hashed credentials (Argon2id).</li>
-          <li data-i18n="trust.t4.l2">RBAC, MFA για admins, principle of least privilege.</li>
-          <li data-i18n="trust.t4.l3">Audit logs immutable, retained 12m, SIEM-monitored.</li>
-          <li data-i18n="trust.t4.l4">Backups κρυπτογραφημένα, RPO 24h / RTO 8h.</li>
+          <li>TLS 1.3 in transit, AES-256 at rest, hashed credentials (Argon2id).</li>
+          <li>RBAC, MFA για admins, principle of least privilege.</li>
+          <li>Audit logs immutable, retained 12m, SIEM-monitored.</li>
         </ul>
       </article>
-
       <article class="trust-card">
-        <h3 data-i18n="trust.t5">Ίση μεταχείριση &amp; fairness</h3>
+        <h3>Ίση μεταχείριση &amp; fairness</h3>
         <ul>
-          <li data-i18n="trust.t5.l1">Anonymized first-pass review (όνομα/φύλο/ηλικία masked).</li>
-          <li data-i18n="trust.t5.l2">Δομημένα κριτήρια αξιολόγησης — ίδια για όλους.</li>
-          <li data-i18n="trust.t5.l3">Δικαίωμα ανθρώπινης παρέμβασης σε αυτοματοποιημένη βαθμολογία (Άρθρο 22 GDPR).</li>
+          <li>Anonymized first-pass review (όνομα/φύλο/ηλικία masked).</li>
+          <li>Δομημένα κριτήρια αξιολόγησης — ίδια για όλους.</li>
+          <li>Δικαίωμα ανθρώπινης παρέμβασης (Άρθρο 22 GDPR).</li>
         </ul>
       </article>
-
       <article class="trust-card">
-        <h3 data-i18n="trust.t6">Governance Pack</h3>
+        <h3>Governance Pack</h3>
         <ul>
-          <li><a href="docs/privacy-policy.html" data-i18n="trust.t6.l1">Privacy Policy</a></li>
-          <li><a href="docs/terms-of-participation.md" data-i18n="trust.t6.l2">Terms of Participation</a></li>
-          <li><a href="docs/dpia-template.md" data-i18n="trust.t6.l3">DPIA Template</a></li>
-          <li><a href="docs/ropa-snippet.md" data-i18n="trust.t6.l4">ROPA (Άρθρο 30)</a></li>
-          <li><a href="docs/iso-27001-27701-matrix.md" data-i18n="trust.t6.l5">ISO 27001/27701 Matrix</a></li>
-          <li><a href="docs/audit-trail-spec.md" data-i18n="trust.t6.l6">Audit Trail Spec</a></li>
+          <li><a href="docs/privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="docs/terms-of-participation.md">Terms of Participation</a></li>
+          <li><a href="docs/dpia-template.md">DPIA Template</a></li>
+          <li><a href="docs/iso-27001-27701-matrix.md">ISO 27001/27701 Matrix</a></li>
         </ul>
       </article>
     </div>
-
     <div class="dpo-card">
-      <strong data-i18n="trust.dpo">Data Protection Officer (DPO):</strong>
+      <strong>Data Protection Officer (DPO):</strong>
       <span>dpo@cosmos-sport.example.com · +30 210 0000000</span>
     </div>
   </div>
@@ -1009,32 +641,23 @@
 <section id="apply" class="section section-cta">
   <div class="container apply-grid">
     <div>
-      <h2 data-i18n="apply.title">Έτοιμος να μπεις στην Arena;</h2>
-      <p data-i18n="apply.lead">Δήλωσε τα στοιχεία σου. Η συμμετοχή σου θα επεξεργαστεί σύμφωνα με την Πολιτική Απορρήτου.</p>
+      <h2>Έτοιμος να μπεις στην Arena;</h2>
+      <p>Δήλωσε τα στοιχεία σου. Η συμμετοχή σου θα επεξεργαστεί σύμφωνα με την Πολιτική Απορρήτου.</p>
     </div>
-    <form class="apply-form" autocomplete="on" novalidate>
-      <label>
-        <span data-i18n="apply.f.name">Ονοματεπώνυμο</span>
-        <input type="text" name="name" required minlength="2" maxlength="80" />
-      </label>
-      <label>
-        <span data-i18n="apply.f.email">Email</span>
-        <input type="email" name="email" required maxlength="120" />
-      </label>
-      <label>
-        <span data-i18n="apply.f.uni">Πανεπιστήμιο / Εταιρία</span>
-        <input type="text" name="affiliation" maxlength="120" />
-      </label>
+    <form class="apply-form" id="arenaApplyForm" autocomplete="on" novalidate>
+      <label><span>Ονοματεπώνυμο</span><input type="text" name="name" required minlength="2" maxlength="80" /></label>
+      <label><span>Email</span><input type="email" name="email" required maxlength="120" /></label>
+      <label><span>Πανεπιστήμιο / Εταιρία</span><input type="text" name="affiliation" maxlength="120" /></label>
       <label class="check">
         <input type="checkbox" name="consent_processing" required />
-        <span data-i18n="apply.f.c1">Έχω διαβάσει την <a href="docs/privacy-policy.html">Πολιτική Απορρήτου</a> και συναινώ στην επεξεργασία των δεδομένων μου για τον σκοπό του διαγωνισμού.</span>
+        <span>Έχω διαβάσει την <a href="docs/privacy-policy.html">Πολιτική Απορρήτου</a> και συναινώ στην επεξεργασία των δεδομένων μου.</span>
       </label>
       <label class="check">
         <input type="checkbox" name="consent_talentpool" />
-        <span data-i18n="apply.f.c2">(Προαιρετικά) Επιθυμώ να διατηρηθούν τα στοιχεία μου στο talent pool έως 24 μήνες για μελλοντικές ευκαιρίες.</span>
+        <span>(Προαιρετικά) Επιθυμώ να διατηρηθούν τα στοιχεία μου στο talent pool έως 24 μήνες.</span>
       </label>
-      <button type="submit" class="btn btn-primary full" data-i18n="apply.f.submit">Υποβολή</button>
-      <p class="form-note" data-i18n="apply.f.note">* Δεν υποβάλλεται πραγματικά — demo form. Σε production συνδέεται με backend με CSRF/Recaptcha/rate-limiting.</p>
+      <button type="submit" class="btn btn-primary full">Υποβολή</button>
+      <p class="form-note">* Demo form — δεν υποβάλλεται πραγματικά.</p>
     </form>
   </div>
 </section>
@@ -1044,36 +667,33 @@
   <div class="container footer-grid">
     <div>
       <p class="brand-text">COSMOS SPORT <em>ARENA</em></p>
-      <p class="muted" data-i18n="footer.tag">Talent · Strategy · Sport</p>
+      <p class="muted">Talent · Strategy · Sport</p>
     </div>
     <nav aria-label="Legal">
-      <a href="docs/privacy-policy.html" data-i18n="footer.l1">Privacy Policy</a>
-      <a href="docs/terms-of-participation.md" data-i18n="footer.l2">Terms</a>
-      <a href="SECURITY.md" data-i18n="footer.l3">Security</a>
-      <a href="CODE_OF_CONDUCT.md" data-i18n="footer.l4">Code of Conduct</a>
-      <a href="docs/data-retention.md" data-i18n="footer.l5">Data Retention</a>
+      <a href="docs/privacy-policy.html">Privacy Policy</a>
+      <a href="docs/terms-of-participation.md">Terms</a>
+      <a href="SECURITY.md">Security</a>
+      <a href="CODE_OF_CONDUCT.md">Code of Conduct</a>
     </nav>
-    <p class="muted small" data-i18n="footer.copy">© 2025 Cosmos Sport — Cosmos Sport Arena. All rights reserved.</p>
+    <p class="muted small">© 2025 Cosmos Sport — Cosmos Sport Arena. All rights reserved.</p>
   </div>
 </footer>
 
 <!-- ================= COOKIE BANNER ================= -->
-<aside id="cookieBanner" class="cookie-banner" role="dialog" aria-modal="false" aria-labelledby="ck-title" hidden>
+<aside id="cookieBanner" role="dialog" aria-modal="false" aria-labelledby="ck-title" hidden>
   <div class="container ck-grid">
     <div>
-      <h3 id="ck-title" data-i18n="ck.title">Cookies &amp; Συγκατάθεση</h3>
-      <p data-i18n="ck.body">
-        Χρησιμοποιούμε αναγκαία cookies για τη λειτουργία του site. Με τη συγκατάθεσή σου, μπορούμε να ενεργοποιήσουμε analytics &amp; marketing cookies. Μπορείς να αλλάξεις την επιλογή σου ανά πάσα στιγμή.
-      </p>
+      <h3 id="ck-title">Cookies &amp; Συγκατάθεση</h3>
+      <p>Χρησιμοποιούμε αναγκαία cookies για τη λειτουργία του site. Με τη συγκατάθεσή σου, ενεργοποιούμε analytics &amp; marketing cookies.</p>
     </div>
     <fieldset class="ck-fields">
-      <label><input type="checkbox" checked disabled /> <span data-i18n="ck.f1">Αναγκαία (πάντα ενεργά)</span></label>
-      <label><input type="checkbox" id="ckAnalytics" /> <span data-i18n="ck.f2">Analytics</span></label>
-      <label><input type="checkbox" id="ckMarketing" /> <span data-i18n="ck.f3">Marketing</span></label>
+      <label><input type="checkbox" checked disabled /> <span>Αναγκαία (πάντα ενεργά)</span></label>
+      <label><input type="checkbox" id="ckAnalytics" /> <span>Analytics</span></label>
+      <label><input type="checkbox" id="ckMarketing" /> <span>Marketing</span></label>
     </fieldset>
     <div class="ck-actions">
-      <button class="btn btn-ghost" id="ckReject" data-i18n="ck.reject">Απόρριψη μη-αναγκαίων</button>
-      <button class="btn btn-primary" id="ckAccept" data-i18n="ck.accept">Αποθήκευση επιλογών</button>
+      <button class="btn btn-ghost"    id="ckReject">Απόρριψη μη-αναγκαίων</button>
+      <button class="btn btn-primary"  id="ckAccept">Αποθήκευση επιλογών</button>
     </div>
   </div>
 </aside>
@@ -1081,7 +701,7 @@
 </div><!-- /page-arena -->
 
 <!-- ═══════════════ PAGE: SMART HR SYSTEM ═══════════════ -->
-<div id="page-hr" class="page" role="tabpanel" aria-labelledby="tab-hr-btn">
+<div id="page-hr" style="display:none;">
 <div class="page-wrapper">
 
   <!-- HEADER -->
@@ -1154,7 +774,7 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
               Αντιγραφή Email
             </button>
-            <button id="btnReset" class="btn btn-outline" onclick="hrResetForm()" style="display:none;">
+            <button id="btnReset" class="btn btn-outline" onclick="hrReset()" style="display:none;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.17"/></svg>
               Reset
             </button>
@@ -1162,7 +782,6 @@
         </div>
       </div>
 
-      <!-- System Constraints -->
       <div class="card" style="margin-bottom:18px;">
         <div class="card-header">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1178,7 +797,6 @@
         </div>
       </div>
 
-      <!-- How it works -->
       <div class="card">
         <div class="card-header">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2.2"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="12" r="10"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -1217,7 +835,6 @@
         </div>
       </div>
 
-      <!-- Examples -->
       <div class="card">
         <div class="card-header">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
@@ -1231,7 +848,7 @@
             </div>
             <div class="example-card-body">
               <p><strong>Χρήση:</strong> Για υποψηφίους που ολοκλήρωσαν τη συνέντευξη και περιμένουν απάντηση</p>
-              <p style="margin-top:5px;"><strong>Περιεχόμενο:</strong> Ευχαριστώ + 2 Positive Tags + Sneak Peek από τα γραφεία</p>
+              <p style="margin-top:5px;"><strong>Περιεχόμενο:</strong> Ευχαριστώ + 2 Positive Tags + Sneak Peek</p>
             </div>
           </div>
           <div class="example-card ex-offer">
@@ -1240,8 +857,8 @@
               ΑΠΟΔΟΧΗ – Offer
             </div>
             <div class="example-card-body">
-              <p><strong>Χρήση:</strong> Για υποψηφίους που επιλέχθηκαν για τη θέση</p>
-              <p style="margin-top:5px;"><strong>Περιεχόμενο:</strong> Welcome + 2 Positive Tags (λόγοι επιλογής) + Offer Letter + Onboarding</p>
+              <p><strong>Χρήση:</strong> Για υποψηφίους που επιλέχθηκαν</p>
+              <p style="margin-top:5px;"><strong>Περιεχόμενο:</strong> Welcome + 2 Positive Tags + Offer Letter</p>
             </div>
           </div>
           <div class="example-card ex-reject">
@@ -1251,9 +868,9 @@
             </div>
             <div class="example-card-body">
               <p><strong>Χρήση:</strong> Για υποψηφίους που δεν επιλέχθηκαν</p>
-              <p style="margin-top:5px;"><strong>Περιεχόμενο:</strong> Ευχαριστώ + 2 Positive Tags + 1 Rejection Tag + -15% έκπτωση</p>
+              <p style="margin-top:5px;"><strong>Περιεχόμενο:</strong> Ευχαριστώ + 2 Positive Tags + 1 Rejection Tag + -15%</p>
               <div class="alert alert-success" style="margin-top:8px;padding:8px 12px;">
-                ✅ Customer Retention Protocol: Κάθε απόρριψη περιλαμβάνει τον κωδικό <strong>COSMOS-FRIENDS</strong> για -15%
+                ✅ Customer Retention: κωδικός <strong>COSMOS-FRIENDS</strong> για -15%
               </div>
             </div>
           </div>
@@ -1270,7 +887,7 @@
     </div>
     <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
       <div>
-        <button class="accordion-header open" onclick="hrToggleAccordion(this)">
+        <button class="accordion-header open" onclick="hrToggle(this)">
           <span style="display:flex;align-items:center;gap:8px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2"><path d="M14 9V5a3 3 0 0 0-6 0v4"/><rect x="2" y="9" width="20" height="13" rx="2"/></svg>
             Positive Tags (10 επιλογές)
@@ -1280,7 +897,7 @@
         <div class="accordion-body open" id="posTagsBody"></div>
       </div>
       <div>
-        <button class="accordion-header open" onclick="hrToggleAccordion(this)">
+        <button class="accordion-header open" onclick="hrToggle(this)">
           <span style="display:flex;align-items:center;gap:8px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
             Rejection Tags (10 επιλογές)
@@ -1292,7 +909,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <div class="footer">
     <div class="footer-inner">
       <div style="font-size:1.6rem;margin-bottom:4px;">🏀</div>
@@ -1304,199 +920,215 @@
 </div><!-- /page-wrapper -->
 </div><!-- /page-hr -->
 
-<!-- Toast for HR page -->
+<!-- HR Toast -->
 <div id="hr-toast">
   <div class="toast-title" id="hrToastTitle"></div>
   <div class="toast-desc"  id="hrToastDesc"></div>
 </div>
 
 <script>
-  // ═══════════════════════════════════════
-  //  PAGE SWITCHER
-  // ═══════════════════════════════════════
-  function showPage(name) {
-    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-    document.querySelectorAll('.tab-btn').forEach(function(b) {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
-    });
-    document.getElementById('page-' + name).classList.add('active');
-    var btn = document.getElementById('tab-' + name + '-btn');
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected', 'true');
-    window.scrollTo(0, 0);
-  }
+// ═══════════════════════════════════════
+//  TAB SWITCHER
+// ═══════════════════════════════════════
+function showPage(name) {
+  document.getElementById('page-arena').style.display = (name === 'arena') ? 'block' : 'none';
+  document.getElementById('page-hr').style.display    = (name === 'hr')    ? 'block' : 'none';
+  var tabs = ['arena','hr'];
+  tabs.forEach(function(t) {
+    var btn = document.getElementById('tab-' + t + '-btn');
+    btn.classList.toggle('active', t === name);
+    btn.setAttribute('aria-selected', String(t === name));
+  });
+  window.scrollTo(0, 0);
+}
 
-  // ═══════════════════════════════════════
-  //  HR DATA
-  // ═══════════════════════════════════════
-  var POSITIVE_TAGS = {
-    'Ενέργεια':           'την αστείρευτη θετική σου ενέργεια και το γνήσιο πάθος σου',
-    'Ομαδικότητα':        'το ισχυρό ομαδικό σου πνεύμα και τη διάθεση συνεργασίας',
-    'Επικοινωνία':        'τις εξαιρετικές επικοινωνιακές σου δεξιότητες',
-    'Προϊόν':             'την πολύ καλή γνώση που έχεις γύρω από τα brands και τα sneakers μας',
-    'Πελατοκεντρικότητα': 'την εξαιρετική σου ικανότητα να ακούς και να κατανοείς τις ανάγκες των πελατών',
-    'Προσαρμοστικότητα':  'την ικανότητά σου να προσαρμόζεσαι γρήγορα σε νέες καταστάσεις',
-    'Ηγετικότητα':        'το φυσικό σου ταλέντο να εμπνέεις και να καθοδηγείς τους άλλους',
-    'Αντοχή':             'τη δυναμικότητα και αντοχή σου σε απαιτητικά περιβάλλοντα',
-    'Καινοτομία':         'τη δημιουργική σου σκέψη και τις καινοτόμες ιδέες σου',
-    'Πειθαρχία':          'την οργανωτική σου ικανότητα και τον επαγγελματισμό σου',
-  };
-  var REJECTION_TAGS = {
-    'Hard Skills':           'ένα προφίλ με άμεση πρακτική εμπειρία σε αντίστοιχο ρόλο, για γρήγορη ένταξη',
-    'Availability':          'ένα προφίλ με απόλυτη ευελιξία στη διαχείριση κυλιόμενων βαρδιών',
-    'Culture Fit':           'ένα προφίλ με διαφορετική δυναμική για τη διατήρηση της ισορροπίας της ομάδας',
-    'Experience Level':      'ένα προφίλ με περισσότερα χρόνια εμπειρίας στο retail',
-    'Technical Skills':      'ένα προφίλ με εξειδικευμένες τεχνικές γνώσεις (π.χ. POS, CRM συστήματα)',
-    'Sales Track Record':    'ένα προφίλ με αποδεδειγμένο track record σε πωλήσεις',
-    'Leadership Experience': 'ένα προφίλ με εμπειρία σε ρόλο team leadership',
-    'Language Skills':       'ένα προφίλ με πολύ καλή γνώση ξένων γλωσσών (Αγγλικά απαραίτητα)',
-    'Full Time Commitment':  'ένα προφίλ με δέσμευση full-time απασχόλησης',
-    'Physical Stamina':      'ένα προφίλ με ικανότητα σωματικής αντοχής για εργασία όρθιος/α',
-  };
+// ═══════════════════════════════════════
+//  HR DATA
+// ═══════════════════════════════════════
+var POSITIVE_TAGS = {
+  'Ενέργεια':           'την αστείρευτη θετική σου ενέργεια και το γνήσιο πάθος σου',
+  'Ομαδικότητα':        'το ισχυρό ομαδικό σου πνεύμα και τη διάθεση συνεργασίας',
+  'Επικοινωνία':        'τις εξαιρετικές επικοινωνιακές σου δεξιότητες',
+  'Προϊόν':             'την πολύ καλή γνώση που έχεις γύρω από τα brands και τα sneakers μας',
+  'Πελατοκεντρικότητα': 'την εξαιρετική σου ικανότητα να ακούς και να κατανοείς τις ανάγκες των πελατών',
+  'Προσαρμοστικότητα':  'την ικανότητά σου να προσαρμόζεσαι γρήγορα σε νέες καταστάσεις',
+  'Ηγετικότητα':        'το φυσικό σου ταλέντο να εμπνέεις και να καθοδηγείς τους άλλους',
+  'Αντοχή':             'τη δυναμικότητα και αντοχή σου σε απαιτητικά περιβάλλοντα',
+  'Καινοτομία':         'τη δημιουργική σου σκέψη και τις καινοτόμες ιδέες σου',
+  'Πειθαρχία':          'την οργανωτική σου ικανότητα και τον επαγγελματισμό σου'
+};
 
-  // ── Init HR selects & tag panels ──
-  (function() {
-    var pt1 = document.getElementById('positiveTag1');
-    var pt2 = document.getElementById('positiveTag2');
-    var rt  = document.getElementById('rejectionTag');
-    Object.keys(POSITIVE_TAGS).forEach(function(tag) {
-      [pt1, pt2].forEach(function(sel) {
-        var opt = document.createElement('option');
-        opt.value = tag; opt.textContent = tag;
-        sel.appendChild(opt);
-      });
-    });
-    Object.keys(REJECTION_TAGS).forEach(function(tag) {
+var REJECTION_TAGS = {
+  'Hard Skills':           'ένα προφίλ με άμεση πρακτική εμπειρία σε αντίστοιχο ρόλο, για γρήγορη ένταξη',
+  'Availability':          'ένα προφίλ με απόλυτη ευελιξία στη διαχείριση κυλιόμενων βαρδιών',
+  'Culture Fit':           'ένα προφίλ με διαφορετική δυναμική για τη διατήρηση της ισορροπίας της ομάδας',
+  'Experience Level':      'ένα προφίλ με περισσότερα χρόνια εμπειρίας στο retail',
+  'Technical Skills':      'ένα προφίλ με εξειδικευμένες τεχνικές γνώσεις (π.χ. POS, CRM συστήματα)',
+  'Sales Track Record':    'ένα προφίλ με αποδεδειγμένο track record σε πωλήσεις',
+  'Leadership Experience': 'ένα προφίλ με εμπειρία σε ρόλο team leadership',
+  'Language Skills':       'ένα προφίλ με πολύ καλή γνώση ξένων γλωσσών (Αγγλικά απαραίτητα)',
+  'Full Time Commitment':  'ένα προφίλ με δέσμευση full-time απασχόλησης',
+  'Physical Stamina':      'ένα προφίλ με ικανότητα σωματικής αντοχής για εργασία όρθιος/α'
+};
+
+// Init selects & tag panels
+(function() {
+  var pt1 = document.getElementById('positiveTag1');
+  var pt2 = document.getElementById('positiveTag2');
+  var rt  = document.getElementById('rejectionTag');
+  Object.keys(POSITIVE_TAGS).forEach(function(tag) {
+    [pt1, pt2].forEach(function(sel) {
       var opt = document.createElement('option');
       opt.value = tag; opt.textContent = tag;
-      rt.appendChild(opt);
+      sel.appendChild(opt);
     });
-    var posBody = document.getElementById('posTagsBody');
-    Object.entries(POSITIVE_TAGS).forEach(function(e) {
-      posBody.innerHTML += '<div class="tag-item tag-item-positive"><span class="tag-label tag-label-positive">' + e[0] + '</span><div class="tag-desc">"' + e[1] + '"</div></div>';
-    });
-    var rejBody = document.getElementById('rejTagsBody');
-    Object.entries(REJECTION_TAGS).forEach(function(e) {
-      rejBody.innerHTML += '<div class="tag-item tag-item-reject"><span class="tag-label tag-label-reject">' + e[0] + '</span><div class="tag-desc">"Για το συγκεκριμένο match, επιλέξαμε ' + e[1] + '"</div></div>';
-    });
-  })();
+  });
+  Object.keys(REJECTION_TAGS).forEach(function(tag) {
+    var opt = document.createElement('option');
+    opt.value = tag; opt.textContent = tag;
+    rt.appendChild(opt);
+  });
+  var posBody = document.getElementById('posTagsBody');
+  Object.keys(POSITIVE_TAGS).forEach(function(tag) {
+    posBody.innerHTML += '<div class="tag-item tag-item-positive"><span class="tag-label tag-label-positive">' + tag + '</span><div class="tag-desc">"' + POSITIVE_TAGS[tag] + '"</div></div>';
+  });
+  var rejBody = document.getElementById('rejTagsBody');
+  Object.keys(REJECTION_TAGS).forEach(function(tag) {
+    rejBody.innerHTML += '<div class="tag-item tag-item-reject"><span class="tag-label tag-label-reject">' + tag + '</span><div class="tag-desc">"Για το συγκεκριμένο match, επιλέξαμε ' + REJECTION_TAGS[tag] + '"</div></div>';
+  });
+})();
 
-  // ── Email generator ──
-  function hrGenerateEmail(data) {
-    var name = data.name, stage = data.stage, pt1 = data.pt1, pt2 = data.pt2, rt = data.rt;
-    var d1 = POSITIVE_TAGS[pt1] || '', d2 = POSITIVE_TAGS[pt2] || '', rd = REJECTION_TAGS[rt] || '';
-    if (stage === 'keep_warm') return {
-      subject: 'Cosmos Sport | Ευχαριστούμε για τη συνέντευξη, ' + name + '! 🏀',
-      body: 'Αγαπητέ/ή ' + name + ',\n\nΘέλαμε να σου μεταφέρουμε πόσο χαρήκαμε που σε γνωρίσαμε!\n\nΚατά τη διάρκεια της διαδικασίας, εκτιμήσαμε ιδιαίτερα:\n• ' + d1 + '\n• ' + d2 + '\n\nΗ διαδικασία αξιολόγησης βρίσκεται σε εξέλιξη και θα επικοινωνήσουμε μαζί σου σύντομα με τα αποτελέσματα.\n\nΣτο μεταξύ, μπορείς να μας ακολουθείς στα social media για ένα sneak peek από τη ζωή στο Cosmos Sport! 👟\n\nΣε ευχαριστούμε για τον χρόνο σου και το ενδιαφέρον σου για την ομάδα μας.\n\n🏀 Together We Make Cosmos A Better Place\nCosmos Sport HR Team'
-    };
-    if (stage === 'offer') return {
-      subject: 'Cosmos Sport | Welcome to the Team, ' + name + '! 🎉',
-      body: 'Αγαπητέ/ή ' + name + ',\n\nΧαρούμαστε πολύ να σου ανακοινώσουμε ότι επιλέχθηκες για να γίνεις μέλος της ομάδας του Cosmos Sport! 🏆\n\nΣε επιλέξαμε γιατί εκτιμήσαμε:\n• ' + d1 + '\n• ' + d2 + '\n\nΑυτές οι ιδιότητες είναι ακριβώς αυτό που χρειαζόμαστε στην ομάδα μας!\n\n📋 ΕΠΟΜΕΝΑ ΒΗΜΑΤΑ:\nΘα λάβεις σύντομα επίσημη επιστολή προσφοράς (Offer Letter) με όλες τις λεπτομέρειες της θέσης, αποδοχών και έναρξης εργασίας.\n\nΑνυπομονούμε να σε υποδεχθούμε στην οικογένεια του Cosmos Sport!\n\n🏀 Together We Make Cosmos A Better Place\nCosmos Sport HR Team'
-    };
-    if (stage === 'rejection') return {
-      subject: 'Cosmos Sport | Αποτέλεσμα Αξιολόγησης – ' + name,
-      body: 'Αγαπητέ/ή ' + name + ',\n\nΣε ευχαριστούμε πολύ για τον χρόνο σου και το ενδιαφέρον σου για τη θέση στο Cosmos Sport.\n\nΚατά τη διάρκεια της διαδικασίας, εκτιμήσαμε ιδιαίτερα:\n• ' + d1 + '\n• ' + d2 + '\n\nΜετά από προσεκτική αξιολόγηση, αποφασίσαμε να προχωρήσουμε με ' + rd + '.\n\nΗ απόφαση αυτή δεν αντικατοπτρίζει αρνητική εκτίμηση για εσένα ως άτομο – τα ταλέντα σου είναι πραγματικά.\n\n🎁 ΩΣ ΕΝΔΕΙΞΗ ΕΚΤΙΜΗΣΗΣ:\nΣου προσφέρουμε έκπτωση -15% σε ολόκληρη την online συλλογή μας!\nΧρησιμοποίησε τον κωδικό: COSMOS-FRIENDS\n\nΕλπίζουμε να σε δούμε ως πελάτη μας και σου ευχόμαστε κάθε επιτυχία στη σταδιοδρομία σου.\n\n🏀 Together We Make Cosmos A Better Place\nCosmos Sport HR Team'
-    };
-    return null;
+// ═══════════════════════════════════════
+//  HR LOGIC
+// ═══════════════════════════════════════
+function hrGenerateEmail(name, stage, pt1, pt2, rt) {
+  var d1 = POSITIVE_TAGS[pt1] || '';
+  var d2 = POSITIVE_TAGS[pt2] || '';
+  var rd = REJECTION_TAGS[rt]  || '';
+  if (stage === 'keep_warm') return {
+    subject: 'Cosmos Sport | Ευχαριστούμε για τη συνέντευξη, ' + name + '! 🏀',
+    body: 'Αγαπητέ/ή ' + name + ',\n\nΘέλαμε να σου μεταφέρουμε πόσο χαρήκαμε που σε γνωρίσαμε!\n\nΚατά τη διάρκεια της διαδικασίας, εκτιμήσαμε ιδιαίτερα:\n• ' + d1 + '\n• ' + d2 + '\n\nΗ διαδικασία αξιολόγησης βρίσκεται σε εξέλιξη και θα επικοινωνήσουμε μαζί σου σύντομα με τα αποτελέσματα.\n\nΣτο μεταξύ, μπορείς να μας ακολουθείς στα social media για ένα sneak peek από τη ζωή στο Cosmos Sport! 👟\n\n🏀 Together We Make Cosmos A Better Place\nCosmos Sport HR Team'
+  };
+  if (stage === 'offer') return {
+    subject: 'Cosmos Sport | Welcome to the Team, ' + name + '! 🎉',
+    body: 'Αγαπητέ/ή ' + name + ',\n\nΧαρούμαστε πολύ να σου ανακοινώσουμε ότι επιλέχθηκες για να γίνεις μέλος της ομάδας του Cosmos Sport! 🏆\n\nΣε επιλέξαμε γιατί εκτιμήσαμε:\n• ' + d1 + '\n• ' + d2 + '\n\nΘα λάβεις σύντομα επίσημη επιστολή προσφοράς (Offer Letter) με όλες τις λεπτομέρειες.\n\n🏀 Together We Make Cosmos A Better Place\nCosmos Sport HR Team'
+  };
+  if (stage === 'rejection') return {
+    subject: 'Cosmos Sport | Αποτέλεσμα Αξιολόγησης – ' + name,
+    body: 'Αγαπητέ/ή ' + name + ',\n\nΣε ευχαριστούμε πολύ για τον χρόνο σου και το ενδιαφέρον σου για τη θέση στο Cosmos Sport.\n\nΚατά τη διάρκεια της διαδικασίας, εκτιμήσαμε ιδιαίτερα:\n• ' + d1 + '\n• ' + d2 + '\n\nΜετά από προσεκτική αξιολόγηση, αποφασίσαμε να προχωρήσουμε με ' + rd + '.\n\nΗ απόφαση αυτή δεν αντικατοπτρίζει αρνητική εκτίμηση για εσένα ως άτομο.\n\n🎁 ΩΣ ΕΝΔΕΙΞΗ ΕΚΤΙΜΗΣΗΣ:\nΈκπτωση -15% με τον κωδικό: COSMOS-FRIENDS\n\n🏀 Together We Make Cosmos A Better Place\nCosmos Sport HR Team'
+  };
+  return null;
+}
+
+function hrUpdate() {
+  var name   = document.getElementById('candidateName').value.trim();
+  var stage  = document.getElementById('processStage').value;
+  var pt1val = document.getElementById('positiveTag1').value;
+  var pt2val = document.getElementById('positiveTag2').value;
+  var rtval  = document.getElementById('rejectionTag').value;
+
+  var tagsSection = document.getElementById('tagsSection');
+  var rejGroup    = document.getElementById('rejectionTagGroup');
+  var tagsInfo    = document.getElementById('tagsInfoText');
+
+  if (stage) {
+    tagsSection.style.display = 'block';
+    if (stage === 'rejection') {
+      rejGroup.style.display = 'block';
+      tagsInfo.textContent   = 'Επίλεξε 2 Positive Tags + 1 Rejection Tag';
+    } else {
+      rejGroup.style.display = 'none';
+      tagsInfo.textContent   = 'Επίλεξε 2 Positive Tags';
+    }
+  } else {
+    tagsSection.style.display = 'none';
   }
 
-  function hrUpdate() {
-    var name   = document.getElementById('candidateName').value.trim();
-    var stage  = document.getElementById('processStage').value;
-    var pt1val = document.getElementById('positiveTag1').value;
-    var pt2val = document.getElementById('positiveTag2').value;
-    var rtval  = document.getElementById('rejectionTag').value;
+  document.getElementById('pt1desc').textContent = pt1val ? '"' + POSITIVE_TAGS[pt1val] + '"' : '';
+  document.getElementById('pt2desc').textContent = pt2val ? '"' + POSITIVE_TAGS[pt2val] + '"' : '';
+  document.getElementById('rtdesc').textContent  = rtval  ? '"Για το συγκεκριμένο match, επιλέξαμε ' + REJECTION_TAGS[rtval] + '"' : '';
 
-    var tagsSection = document.getElementById('tagsSection');
-    var rejGroup    = document.getElementById('rejectionTagGroup');
-    var tagsInfo    = document.getElementById('tagsInfoText');
+  var isValid = name && stage && pt1val && pt2val && (stage !== 'rejection' || rtval) && pt1val !== pt2val;
+  document.getElementById('validAlert').style.display = isValid ? 'flex' : 'none';
+  document.getElementById('btnCopy').disabled = !isValid;
+  document.getElementById('btnReset').style.display = (name || stage || pt1val || pt2val) ? 'inline-flex' : 'none';
 
-    if (stage) {
-      tagsSection.style.display = 'block';
-      if (stage === 'rejection') { rejGroup.style.display = 'block'; tagsInfo.textContent = 'Επίλεξε 2 Positive Tags + 1 Rejection Tag'; }
-      else                       { rejGroup.style.display = 'none';  tagsInfo.textContent = 'Επίλεξε 2 Positive Tags'; }
-    } else { tagsSection.style.display = 'none'; }
-
-    document.getElementById('pt1desc').textContent = pt1val ? '"' + POSITIVE_TAGS[pt1val] + '"' : '';
-    document.getElementById('pt2desc').textContent = pt2val ? '"' + POSITIVE_TAGS[pt2val] + '"' : '';
-    document.getElementById('rtdesc').textContent  = rtval  ? '"Για το συγκεκριμένο match, επιλέξαμε ' + REJECTION_TAGS[rtval] + '"' : '';
-
-    var isValid = name && stage && pt1val && pt2val && (stage !== 'rejection' || rtval) && pt1val !== pt2val;
-    document.getElementById('validAlert').style.display = isValid ? 'flex' : 'none';
-    document.getElementById('btnCopy').disabled = !isValid;
-    document.getElementById('btnReset').style.display = (name || stage || pt1val || pt2val) ? 'inline-flex' : 'none';
-
-    var placeholder = document.getElementById('emailPlaceholder');
-    var preview     = document.getElementById('emailPreview');
-    if (name && stage && pt1val && pt2val) {
-      var email = hrGenerateEmail({ name: name, stage: stage, pt1: pt1val, pt2: pt2val, rt: rtval });
-      if (email) {
-        placeholder.style.display = 'none'; preview.style.display = 'block';
-        document.getElementById('emailSubject').textContent = email.subject;
-        document.getElementById('emailBody').textContent    = email.body;
-      }
-    } else { placeholder.style.display = 'block'; preview.style.display = 'none'; }
+  var placeholder = document.getElementById('emailPlaceholder');
+  var preview     = document.getElementById('emailPreview');
+  if (name && stage && pt1val && pt2val) {
+    var email = hrGenerateEmail(name, stage, pt1val, pt2val, rtval);
+    if (email) {
+      placeholder.style.display = 'none';
+      preview.style.display     = 'block';
+      document.getElementById('emailSubject').textContent = email.subject;
+      document.getElementById('emailBody').textContent    = email.body;
+    }
+  } else {
+    placeholder.style.display = 'block';
+    preview.style.display     = 'none';
   }
+}
 
-  function hrCopyEmail() {
-    var name  = document.getElementById('candidateName').value.trim();
-    var stage = document.getElementById('processStage').value;
-    var pt1   = document.getElementById('positiveTag1').value;
-    var pt2   = document.getElementById('positiveTag2').value;
-    var rt    = document.getElementById('rejectionTag').value;
-    var email = hrGenerateEmail({ name: name, stage: stage, pt1: pt1, pt2: pt2, rt: rt });
-    if (!email) return;
-    var text = 'Subject: ' + email.subject + '\n\n' + email.body;
-    navigator.clipboard.writeText(text).then(function() {
-      hrShowToast('success', 'Email αντιγράφηκε στο clipboard! 📧', 'Ready για αποστολή στον/στην ' + name);
-    }).catch(function() {
-      var ta = document.createElement('textarea'); ta.value = text;
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-      hrShowToast('success', 'Email αντιγράφηκε! 📧', 'Ready για αποστολή στον/στην ' + name);
-    });
-  }
+function hrCopyEmail() {
+  var name  = document.getElementById('candidateName').value.trim();
+  var stage = document.getElementById('processStage').value;
+  var pt1   = document.getElementById('positiveTag1').value;
+  var pt2   = document.getElementById('positiveTag2').value;
+  var rt    = document.getElementById('rejectionTag').value;
+  var email = hrGenerateEmail(name, stage, pt1, pt2, rt);
+  if (!email) return;
+  var text = 'Subject: ' + email.subject + '\n\n' + email.body;
+  navigator.clipboard.writeText(text).then(function() {
+    hrToast('success', 'Email αντιγράφηκε! 📧', 'Ready για αποστολή στον/στην ' + name);
+  }).catch(function() {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    hrToast('success', 'Email αντιγράφηκε! 📧', 'Ready για αποστολή στον/στην ' + name);
+  });
+}
 
-  function hrResetForm() {
-    ['candidateName','processStage','positiveTag1','positiveTag2','rejectionTag'].forEach(function(id) {
-      document.getElementById(id).value = '';
-    });
-    hrUpdate();
-    hrShowToast('info', 'Φόρμα καθαρίστηκε', 'Έτοιμος/η για νέο υποψήφιο!');
-  }
+function hrReset() {
+  ['candidateName','processStage','positiveTag1','positiveTag2','rejectionTag'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  hrUpdate();
+  hrToast('info', 'Φόρμα καθαρίστηκε', 'Έτοιμος/η για νέο υποψήφιο!');
+}
 
-  var _hrToastTimer;
-  function hrShowToast(type, title, desc) {
-    var el = document.getElementById('hr-toast');
-    el.className = type;
-    document.getElementById('hrToastTitle').textContent = title;
-    document.getElementById('hrToastDesc').textContent  = desc || '';
-    el.classList.add('show');
-    clearTimeout(_hrToastTimer);
-    _hrToastTimer = setTimeout(function() { el.classList.remove('show'); }, 3200);
-  }
+var _hrTimer;
+function hrToast(type, title, desc) {
+  var el = document.getElementById('hr-toast');
+  el.className = type;
+  document.getElementById('hrToastTitle').textContent = title;
+  document.getElementById('hrToastDesc').textContent  = desc || '';
+  el.classList.add('show');
+  clearTimeout(_hrTimer);
+  _hrTimer = setTimeout(function() { el.classList.remove('show'); }, 3200);
+}
 
-  function hrToggleAccordion(btn) {
-    btn.classList.toggle('open');
-    btn.nextElementSibling.classList.toggle('open');
-  }
+function hrToggle(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
 
-  // Arena cookie banner init
-  (function() {
-    var b   = document.getElementById('cookieBanner');
-    var acc = document.getElementById('ckAccept');
-    var rej = document.getElementById('ckReject');
-    if (b && !localStorage.getItem('cosmos_ck')) { b.hidden = false; }
-    if (acc) acc.addEventListener('click', function() { localStorage.setItem('cosmos_ck','1'); b.hidden = true; });
-    if (rej) rej.addEventListener('click', function() { localStorage.setItem('cosmos_ck','0'); b.hidden = true; });
-    var lt = document.getElementById('langToggle');
-    if (lt) lt.addEventListener('click', function() {
-      var p = this.getAttribute('aria-pressed') === 'true';
-      this.setAttribute('aria-pressed', String(!p));
-    });
-    var applyForm = document.querySelector('#page-arena .apply-form');
-    if (applyForm) applyForm.addEventListener('submit', function(e) { e.preventDefault(); alert('Demo — no real submission.'); });
-  })();
+// ═══════════════════════════════════════
+//  ARENA INIT
+// ═══════════════════════════════════════
+(function() {
+  var b   = document.getElementById('cookieBanner');
+  var acc = document.getElementById('ckAccept');
+  var rej = document.getElementById('ckReject');
+  if (b && !localStorage.getItem('cosmos_ck')) b.hidden = false;
+  if (acc) acc.addEventListener('click', function() { localStorage.setItem('cosmos_ck','1'); b.hidden = true; });
+  if (rej) rej.addEventListener('click', function() { localStorage.setItem('cosmos_ck','0'); b.hidden = true; });
+  var lt = document.getElementById('langToggle');
+  if (lt) lt.addEventListener('click', function() {
+    this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'));
+  });
+  var f = document.getElementById('arenaApplyForm');
+  if (f) f.addEventListener('submit', function(e) { e.preventDefault(); alert('Demo — no real submission.'); });
+})();
 </script>
 </body>
 </html>
